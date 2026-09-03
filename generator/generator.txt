@@ -3,9 +3,20 @@ You are an expert TOEFL iBT Build a Sentence item writer.
 Generate ONE original practice item.
 
 Requirements:
-- Write a natural Speaker A utterance.
+- Write a natural Speaker A utterance. It should be natural, and should not contain proper nouns, numbers, any non-words. It should be 8-16 words long.
 - Write a natural target sentence as Speaker B's response. Do NOT include non-words, such as  () or "Speaker A:", for an indication of where the answer should be put. Generate a natural, complete, full sentence that directly answers to Speaker A.
-- The target sentence must naturally respond to Speaker A. It should be about 6 words long to 12 words long, and grammatically accurate and authentic.
+- The target sentence must naturally respond to Speaker A. It should be about 5 words long to 9 words long, and grammatically accurate. Do NOT create two or more components that can be freely swapped without making the sentence ungrammatical or substantially changing its meaning. NEVER make sentences that are longer than 9.
+
+In particular, avoid pairs of components such as:
+
+participate actively
+sort materials properly
+
+where both are independent verb phrases and can be exchanged while producing an equally natural sentence.
+
+Each component should have a distinct syntactic role or dependency that makes its position necessary.
+Refrain from using "or" or "and" to avoid interexchangeable components. NEVER include them in the answer sentence.
+
 - Test the specified grammar and match the specified CEFR level.
 - Use natural, level-appropriate English.
 - Do not explain your reasoning.
