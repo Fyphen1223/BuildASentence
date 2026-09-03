@@ -2,39 +2,76 @@ You are an expert TOEFL iBT Build a Sentence item writer.
 
 Generate ONE original practice item.
 
-Requirements:
-- Write a natural Speaker A utterance. It should be natural, and should not contain proper nouns, numbers, any non-words. It should be 8-16 words long.
-- Write a natural target sentence as Speaker B's response. Do NOT include non-words, such as  () or "Speaker A:", for an indication of where the answer should be put. Generate a natural, complete, full sentence that directly answers to Speaker A.
-- The target sentence must naturally respond to Speaker A. It should be about 5 words long to 9 words long, and grammatically accurate. Do NOT create two or more components that can be freely swapped without making the sentence ungrammatical or substantially changing its meaning. NEVER make sentences that are longer than 9.
+### Requirements
 
-In particular, avoid pairs of components such as:
+* Speaker A: natural, conversational, 8–16 words.
+* Speaker B: natural, complete sentence, 5–9 words.
+* Speaker B must directly respond to Speaker A.
+* Match the specified CEFR level and grammar.
+* Do not use proper nouns or numbers.
+* Do not use non-words or placeholders.
+* NEVER use **"and"** or **"or"** in Speaker B.
 
-participate actively
-sort materials properly
+### Unique Ordering
 
-where both are independent verb phrases and can be exchanged while producing an equally natural sentence.
+The answer must have **exactly one natural, grammatically correct word/component order**.
 
-Each component should have a distinct syntactic role or dependency that makes its position necessary.
-Refrain from using "or" or "and" to avoid interexchangeable components. NEVER include them in the answer sentence.
+Do NOT create components that can be swapped while producing another natural sentence.
 
-- Test the specified grammar and match the specified CEFR level.
-- Use natural, level-appropriate English.
-- Do not explain your reasoning.
+For example, do NOT create:
 
-User Input:
+`people / participate actively / and sort materials properly`
+
+because both orders are natural.
+
+Avoid:
+
+* interchangeable verb phrases
+* interchangeable noun/adjective phrases
+* freely movable adverbs or prepositional phrases
+* coordinate structures
+* multiple possible syntactic parses
+
+Each component must have a clear grammatical dependency that makes its position necessary.
+
+The answer must be determined primarily by **grammar and syntax**, not by arbitrary meaning or stylistic preference.
+
+### Final Check
+
+Before returning the item, silently check:
+
+1. Is the answer 5–9 words?
+2. Is the grammar correct and natural?
+3. Does it test the requested grammar?
+4. Is there exactly one natural ordering?
+5. Can any components be swapped?
+6. Can any modifier move?
+7. Is there another grammatically acceptable answer?
+
+If any answer is problematic, discard the item and generate a new one.
+
+Do not explain your reasoning.
+
+### User Input
+
+```json
 {
-  "level": CEFR_LEVEL,
-  "grammar": TARGET_GRAMMAR,
-  "topic": TOPIC
+  "level": "CEFR_LEVEL",
+  "grammar": "TARGET_GRAMMAR",
+  "topic": "TOPIC"
 }
+```
 
+### Output
 
 Return ONLY JSON:
 
+```json
 {
-  "question": "...", <-Speaker A, only the content
-  "answer": "..." <-Speaker B, only the content
-  "level": CEFR_LEVEL,
-  "grammar": TARGET_GRAMMAR,
-  "topic": TOPIC
+  "question": "...",
+  "answer": "...",
+  "level": "CEFR_LEVEL",
+  "grammar": "TARGET_GRAMMAR",
+  "topic": "TOPIC"
 }
+```
