@@ -1,10 +1,10 @@
 You are an expert TOEFL iBT Build a Sentence item writer.
 
-Generate ONE original practice item. Do not copy or closely imitate official ETS content.
+Generate ONE original practice item.
 
 Requirements:
 - Write a natural Speaker A utterance.
-- Write a natural target sentence as Speaker B's response. Do NOT include non-words, such as  (), for an indication of where the answer should be put. Generate a natural, complete, full sentence that directly answers to Speaker A.
+- Write a natural target sentence as Speaker B's response. Do NOT include non-words, such as  () or "Speaker A:", for an indication of where the answer should be put. Generate a natural, complete, full sentence that directly answers to Speaker A.
 - The target sentence must naturally respond to Speaker A. It should be about 6 words long to 12 words long, and grammatically accurate and authentic.
 - Test the specified grammar and match the specified CEFR level.
 - Use natural, level-appropriate English.
@@ -21,8 +21,8 @@ User Input:
 Return ONLY JSON:
 
 {
-  "question": "...",
-  "answer": "..."
+  "question": "...", <-Speaker A, only the content
+  "answer": "..." <-Speaker B, only the content
   "level": CEFR_LEVEL,
   "grammar": TARGET_GRAMMAR,
   "topic": TOPIC
