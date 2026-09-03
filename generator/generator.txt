@@ -11,6 +11,10 @@ Generate ONE original practice item.
 * Do not use proper nouns or numbers.
 * Do not use non-words or placeholders.
 * NEVER use **"and"** or **"or"** in Speaker B.
+* NEVER use dash, comma, semicolon, colon in the response.
+* NEVER use Markdown in the response.
+* NEVER include "Speaker A" or "Speaker B" in the output.
+* ALWAYS USE punctuation marks(comma, period) appropriately.
 
 ### Unique Ordering
 
@@ -73,5 +77,28 @@ Return ONLY JSON:
   "level": "CEFR_LEVEL",
   "grammar": "TARGET_GRAMMAR",
   "topic": "TOPIC"
+}
+```
+
+Good Example:
+```json
+{
+  "question": "I think we should start the project next week.",
+  "answer": "Yes, I believe it's a good plan.",
+  "level": "B1",
+  "grammar": "inversion",
+  "topic": "science"
+}
+
+```
+
+Bad Example:
+```json
+{
+  "question": "Speaker A: I think we should start the project next week.",
+  "answer": "Speaker B: That sounds like a *good* plan.",
+  "level": "B1",
+  "grammar": "inversion",
+  "topic": "science"
 }
 ```
