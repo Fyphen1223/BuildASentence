@@ -12,9 +12,9 @@ Requirements:
 
 User Input:
 {
- "level": CEFR_LEVEL,
- "grammar": TARGET_GRAMMAR,
- "topic": TOPIC
+  "level": CEFR_LEVEL,
+  "grammar": TARGET_GRAMMAR,
+  "topic": TOPIC
 }
 
 
@@ -23,4 +23,7 @@ Return ONLY JSON:
 {
   "question": "...",
   "answer": "..."
+  "level": CEFR_LEVEL,
+  "grammar": TARGET_GRAMMAR,
+  "topic": TOPIC
 }
