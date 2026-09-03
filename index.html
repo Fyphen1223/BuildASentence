@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOEFL iBT® - Writing: Build a Sentence</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="ets-header">
+      <div class="header-left">
+        <span class="toefl-logo">TOEFL iBT</span>
+        <span class="divider">|</span>
+        <span class="section-title">Writing: Build a Sentence</span>
+      </div>
+      <div class="header-right">
+        <div class="timer-box">
+          <i class="fa-regular fa-clock"></i>
+          <span id="timer-display">00:00</span>
+        </div>
+        <div class="header-actions">
+          <button
+            id="btn-open-history"
+            class="header-btn"
+            title="View History & Weaknesses"
+          >
+            <i class="fa-solid fa-chart-pie"></i> Stats & History
+          </button>
+          <button
+            id="btn-open-backup"
+            class="header-btn"
+            title="Backup / Restore"
+          >
+            <i class="fa-solid fa-database"></i> Backup
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- サブヘッダー（進行状況 ＆ モード・Skill・難易度・Rangeフィルター） -->
+    <div class="ets-subbar">
+      <div class="subbar-content">
+        <div class="subbar-left">
+          <span id="q-counter" class="question-progress">Question 1 of --</span>
+          <div class="metadata-tags">
+            <span id="badge-cefr" class="meta-tag">CEFR: -</span>
+            <span id="badge-skill" class="meta-tag skill-badge">Skill: -</span>
+            <span id="badge-chunks" class="meta-tag">Chunks: -</span>
+          </div>
+        </div>
+
+        <!-- フィルター＆モード設定 -->
+        <div class="filter-controls">
+          <div class="filter-group">
+            <label for="filter-mode"
+              ><i class="fa-solid fa-bullseye"></i> Mode:</label
+            >
+            <select id="filter-mode" class="filter-select">
+              <option value="all">All Questions</option>
+              <option value="unsolved">
+                Unanswered First (一度解いたら後回し)
+              </option>
+              <option value="review">
+                Review Mistakes (間違えたものを復習)
+              </option>
+            </select>
+          </div>
+
+          <!-- ★Skill別出題フィルター -->
+          <div class="filter-group">
+            <label for="filter-skill"
+              ><i class="fa-solid fa-wand-magic-sparkles"></i> Skill:</label
+            >
+            <select id="filter-skill" class="filter-select">
+              <option value="all">All Skills</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-cefr"
+              ><i class="fa-solid fa-layer-group"></i> Level:</label
+            >
+            <select id="filter-cefr" class="filter-select">
+              <option value="all">All Levels</option>
+            </select>
+          </div>
+
+          <!-- ★フレーズ数のRange指定フィルター -->
+          <div class="filter-group">
+            <label><i class="fa-solid fa-arrows-left-right"></i> Chunks:</label>
+            <select
+              id="filter-chunks-min"
+              class="filter-select select-mini"
+              title="Min Chunks"
+            ></select>
+            <span>〜</span>
+            <select
+              id="filter-chunks-max"
+              class="filter-select select-mini"
+              title="Max Chunks"
+            ></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <main class="test-container">
+      <!-- ローディング -->
+      <div id="loading" class="state-container">
+        <div class="spinner"></div>
+        <p>Loading questions from <code>./generator/parsed.jsonl</code>...</p>
+      </div>
+
+      <!-- クイズ画面 -->
+      <div id="quiz-screen" class="screen hidden">
+        <div class="task-instructions">
+          <p>
+            <strong>Directions:</strong> Drag and drop (or click) words into any
+            slot to construct a grammatically correct sentence.
+          </p>
+        </div>
+
+        <!-- プロンプト -->
+        <div class="prompt-section">
+          <div class="prompt-label">Prompt / Context</div>
+          <div id="prompt-box" class="prompt-content">--</div>
+        </div>
+
+        <!-- 解答エリア -->
+        <div class="answer-section">
+          <div class="section-sublabel">Your Sentence:</div>
+          <div class="sentence-builder-wrapper">
+            <div id="slots-container" class="slots-container"></div>
+            <span class="fixed-period">.</span>
+          </div>
+        </div>
+
+        <!-- Word Bank -->
+        <div class="wordbank-section">
+          <div class="section-sublabel">Word Bank:</div>
+          <div id="wordbank-container" class="wordbank-container"></div>
+        </div>
+
+        <!-- フィードバック -->
+        <div id="feedback-panel" class="feedback-panel hidden">
+          <div id="feedback-header" class="feedback-header"></div>
+          <div id="feedback-body" class="feedback-body"></div>
+        </div>
+      </div>
+
+      <!-- 0件表示 -->
+      <div id="empty-screen" class="state-container hidden">
+        <div class="end-icon">🔍</div>
+        <h2 id="empty-title">No Questions Found</h2>
+        <p id="empty-desc" class="final-stats">
+          条件に一致する問題がありません。フィルターやモードの設定を変更してください。
+        </p>
+      </div>
+
+      <!-- 終了画面 -->
+      <div id="end-screen" class="state-container hidden">
+        <div class="end-icon">🎯</div>
+        <h2>Test Completed!</h2>
+        <p id="final-stats" class="final-stats"></p>
+        <button id="btn-restart" class="btn-ets primary">Practice Again</button>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="ets-footer">
+      <div class="footer-content">
+        <button id="btn-reset" class="btn-ets secondary">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Reset Words
+        </button>
+        <div class="nav-actions">
+          <button id="btn-skip" class="btn-ets secondary">Skip</button>
+          <button id="btn-check" class="btn-ets primary" disabled>
+            Submit
+          </button>
+          <button id="btn-next" class="btn-ets accent hidden">
+            Next Question <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 統計・弱点分析 ＆ 履歴モーダル -->
+    <div id="modal-history" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-chart-pie"></i> Performance & History</h3>
+          <button class="modal-close" id="btn-close-history">&times;</button>
+        </div>
+        <div class="modal-stats-bar">
+          <span>Total: <strong id="stat-total-attempts">0</strong></span>
+          <span>Accuracy: <strong id="stat-accuracy">0%</strong></span>
+          <span>Unique Mistakes: <strong id="stat-mistakes">0</strong></span>
+        </div>
+        <div class="modal-body">
+          <!-- ★Skill別弱点分析セクション -->
+          <div class="stats-section">
+            <div class="section-heading">
+              <h4>
+                <i class="fa-solid fa-triangle-exclamation text-amber"></i>
+                Skill-based Weakness Analysis
+              </h4>
+              <span class="text-xs text-muted"
+                >間違えやすい順に表示（クリックで集中特訓）</span
+              >
+            </div>
+            <div id="skill-stats-list" class="skill-stats-grid"></div>
+          </div>
+
+          <div class="stats-section mt-4">
+            <div class="section-heading">
+              <h4><i class="fa-solid fa-list-check"></i> Recent Attempts</h4>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- チェックポイント（Backup & Restore）モーダル -->
+    <div id="modal-backup" class="modal-overlay hidden">
+      <div class="modal-card modal-sm">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-database"></i> Checkpoint Backup</h3>
+          <button class="modal-close" id="btn-close-backup">&times;</button>
+        </div>
+        <div class="modal-body space-y-4">
+          <p class="text-sm text-muted">
+            解答ログ・履歴データをJSONファイルとして保存、または別端末から復元できます。
+          </p>
+
+          <div class="backup-action-box">
+            <h4>Download Checkpoint</h4>
+            <p class="text-xs text-muted">
+              現在の履歴データをファイルに書き出します。
+            </p>
+            <button id="btn-export-json" class="btn-ets primary w-full">
+              <i class="fa-solid fa-download"></i> Export checkpoint.json
+            </button>
+          </div>
+
+          <div class="backup-action-box">
+            <h4>Restore Checkpoint</h4>
+            <p class="text-xs text-muted">以前保存したJSONを読み込みます。</p>
+            <input
+              type="file"
+              id="file-import-json"
+              accept=".json"
+              style="display: none"
+            />
+            <button id="btn-import-trigger" class="btn-ets secondary w-full">
+              <i class="fa-solid fa-upload"></i> Import JSON File
+            </button>
+          </div>
+
+          <div class="backup-action-box danger">
+            <h4>Clear All Data</h4>
+            <button
+              id="btn-clear-history"
+              class="btn-ets secondary w-full text-danger"
+            >
+              <i class="fa-solid fa-trash-can"></i> Reset Local History
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

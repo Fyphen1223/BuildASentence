@@ -12,6 +12,7 @@
   "packageManager": "pnpm@10.32.1",
   "dependencies": {
     "@mistralai/mistralai": "^2.6.4",
+    "compromise": "^14.16.0",
     "groq-sdk": "^1.6.0"
   }
 }
