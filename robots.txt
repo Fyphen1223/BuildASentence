@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fyphen1223.github.io/BuildASentence/sitemap.xml
